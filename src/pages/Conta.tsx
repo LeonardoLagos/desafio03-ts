@@ -36,7 +36,7 @@ const Conta = () => {
     if(userData && id !== userData.id) {
         navigate('/')
     }
-  
+    
     return (
         <Center>
             <SimpleGrid columns={2} spacing={8} paddingTop={16}>

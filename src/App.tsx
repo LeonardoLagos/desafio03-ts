@@ -5,20 +5,23 @@ import { BrowserRouter } from 'react-router-dom';
 import {  AppContextProvider } from './components/AppContext';
 import { Layout } from './components/Layout';
 import MainRoutes from './routes';
-import { createLocalStorage, getAllLocalStorage } from './services/storage';
+import { QueryLocalStorage, createLocalStorage } from './services/storage';
+import { UserContextProvider } from './components/UserContext';
 
 function App() {
 
-  !getAllLocalStorage() && createLocalStorage()
+  !QueryLocalStorage('diobank') && createLocalStorage()
 
   return (
     <BrowserRouter>
       <AppContextProvider>
+        <UserContextProvider>
         <ChakraProvider>
           <Layout>
             < MainRoutes />
           </Layout>
         </ChakraProvider>
+        </UserContextProvider>
       </AppContextProvider>
     </BrowserRouter>
   );

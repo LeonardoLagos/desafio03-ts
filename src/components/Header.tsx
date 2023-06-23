@@ -1,7 +1,7 @@
 import { Box, Button, Center, Flex, Spacer, Text } from '@chakra-ui/react'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { changeLocalStorage } from '../services/storage'
+import { changeLocalStorage, createLocalStorage } from '../services/storage'
 import { AppContext } from './AppContext'
 
 export const Header  = () => {
@@ -9,9 +9,13 @@ export const Header  = () => {
   const navigate = useNavigate()
 
   const logout = () => {
-    changeLocalStorage({ login: false})
     setIsLoggedIn(false)
+    createLocalStorage()
     navigate('/')
+  }
+
+  const Info = () => {
+    navigate('/infoconta/1')
   }
 
   return(
@@ -25,7 +29,12 @@ export const Header  = () => {
         isLoggedIn && (
           <>
             <Spacer />
-            <Button
+            <Button margin={'5px'}
+              onClick={() => Info()}
+            >
+              Informacoes
+            </Button>
+            <Button margin={'5px'}
               onClick={() => logout()}
             >
               Sair

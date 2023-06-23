@@ -1,30 +1,31 @@
 import { createContext, useEffect, useState } from "react"
-import { getAllLocalStorage } from "../services/storage"
+import { QueryLocalStorage } from "../services/storage"
 
 interface IAppContext {
-    user: string,
+    userApp: string,
+    setUserApp: (user:string) => void
     isLoggedIn: boolean,
     setIsLoggedIn: (isLoggedIn: boolean) => void
 }
+
   
 export const AppContext = createContext({} as IAppContext)
-  
+
 export const AppContextProvider = ({ children }: any) => {
     const [ isLoggedIn, setIsLoggedIn ] = useState<boolean>(false)
+    const [ userApp, setUserApp ] = useState<string>('')
 
-    const storage = getAllLocalStorage()
-
+    const storage = QueryLocalStorage('diobank')
     useEffect(() => {
       if(storage){
-        const { login } = JSON.parse(storage)
-        setIsLoggedIn(login)
+        const { userApp, login } = JSON.parse(storage)
+        setIsLoggedIn(false)
+        setUserApp(userApp)
       }
     }, [])
-
-    const user = 'nathally'
   
     return (
-      <AppContext.Provider value={{ user, isLoggedIn, setIsLoggedIn }}>
+      <AppContext.Provider value={{ userApp, setUserApp, isLoggedIn, setIsLoggedIn }}>
         { children }
       </AppContext.Provider>
     )
